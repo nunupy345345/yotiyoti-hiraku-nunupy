@@ -12,6 +12,13 @@ const ErrorText = () => (
   <p className="App-error-text">geolocation IS NOT available</p>
 );
 
+const handleApiLoaded = ({ map, maps }) => {
+  new maps.Marker({
+    map,
+    position: defaultLatLng,
+  });
+};
+
 const Correct = (lati,long) => {
   if (lati === null || long === null) {
     return false;
@@ -85,6 +92,7 @@ export default () => {
         bootstrapURLKeys={{ key: process.env.REACT_APP_NEXT_PUBLIC_GOOGLE_MAP_KEY }}
         defaultCenter={defaultLatLng}
         defaultZoom={16}
+        onGoogleApiLoaded={handleApiLoaded}
       />
     </div>
     </div>

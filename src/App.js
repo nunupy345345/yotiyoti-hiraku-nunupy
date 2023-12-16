@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
+import GoogleMapReact from 'google-map-react';
 
-const set_latitude = 40.1571167;
-const set_longitude = 136.9708042;
+const defaultLatLng = {
+  lat: 35.1571167,
+  lng: 136.9708042,
+};
 
 /* エラーテキスト */
 const ErrorText = () => (
@@ -13,8 +16,8 @@ const Correct = (lati,long) => {
   if (lati === null || long === null) {
     return false;
   }
-  let lati_gap = Math.abs(lati-set_latitude);
-  let long_gap = Math.abs(long-set_longitude);
+  let lati_gap = Math.abs(lati-defaultLatLng.lat);
+  let long_gap = Math.abs(long-defaultLatLng.lng);
   let result = false;
   
   if ((lati_gap < 1) && (long_gap < 1)) {
@@ -61,7 +64,7 @@ export default () => {
   };
   // useEffect実行前であれば、"Loading..."という呼び出しを表示させます
   if (isFirstRef.current) return <div className="App">Loading...</div>;
-
+  console.log(process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY)
   return (
     <div className="App">
       <p>Geolocation API Sample</p>
@@ -77,6 +80,13 @@ export default () => {
           <h3>{CheckAnswer()}</h3>
         </div>
       )}
+      <div style={{ height: '300px', width: '300px' }}>
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: process.env.REACT_APP_NEXT_PUBLIC_GOOGLE_MAP_KEY }}
+        defaultCenter={defaultLatLng}
+        defaultZoom={16}
+      />
+    </div>
     </div>
   );
 };

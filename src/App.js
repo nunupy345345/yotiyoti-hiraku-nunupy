@@ -139,6 +139,7 @@ export default () => {
         }}
         defaultZoom={16}
         onGoogleApiLoaded={handleApiLoaded}
+        onChange={getCurrentPosition}
         // yesIWantToUseGoogleMapApiInternals={true}
       />
     </div>

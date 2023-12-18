@@ -1,38 +1,131 @@
 .App {
   text-align: center;
 }
+.heading-016 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333333;
+}
 
-.App-logo {
-  height: 40vmin;
+.heading-016::before,
+.heading-016::after {
+  width: 3px;
+  height: 40px;
+  background-color: #2589d0;
+  content: '';
+}
+
+.heading-016::before {
+  transform: rotate(-35deg);
+  margin-right: 30px;
+}
+
+.heading-016::after {
+  transform: rotate(35deg);
+  margin-left: 30px;
+}
+.button-004 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  margin:0 auto;
+  padding: .9em 2em;
+  border: none;
+  border-bottom: solid 5px #0059a0;
+  border-radius: 25px;
+  background-color: #2589d0;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1em;
+  transition: .5s ease;
+}
+
+.button-004:hover {
+  transform: translateY(3px);
+  border-bottom-width: 2px;
+}
+
+.selectbox-001 {
+  position: relative;
+}
+
+.selectbox-001::before,
+.selectbox-001::after {
+  position: absolute;
+  content: '';
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.selectbox-001::before {
+  display: inline-block;
+  right: 0;
+  width: 2.8em;
+  height: 2.8em;
+  border-radius: 0 25px 25px 0;
+  background-color: #2589d0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.selectbox-001::after {
+  position: absolute;
+  top: 50%;
+  right: 1.4em;
+  transform: translate(50%, -50%) rotate(45deg);
+  width: 6px;
+  height: 6px;
+  border-bottom: 3px solid #fff;
+  border-right: 3px solid #fff;
+}
+
+.selectbox-001 select {
+  appearance: none;
+  min-width: 230px;
+  height: 2.8em;
+  padding: .4em 3.6em .4em .8em;
+  border: none;
+  border-radius: 25px;
+  background-color: #e6edf3;
+  color: #333;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.selectbox-001 select:focus {
+  outline: 2px solid #2589d0;
+}
+
+.map {
+  height: '300px';
+  width: '300px';
+  margin-top: 30px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
-
-.App-link {
-  color: #61dafb;
+/*線*/
+html:before,
+html:after,
+body:before,
+body:after {
+  content: '';
+  background: #2589d0;
+  position: fixed;
+  display: block;
+  z-index: -1;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* 右 */
+html:after {
+  width: 5vw;
+  height: 100vh;
+  right: 0;
+  top: 0;
+  opacity: 0.5;
+}
+/* 左 */
+body:after {
+  width: 5vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
 }

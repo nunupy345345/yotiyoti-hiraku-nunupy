@@ -98,12 +98,13 @@ export default () => {
   // useEffect実行前であれば、"Loading..."という呼び出しを表示させます
   if (isFirstRef.current) return <div className="App">Loading...</div>;
   return (
-    <div className="App">
-      <p>Geolocation API Sample</p>
+    <div>
+      <div className='App'>
+      <h1 className='heading-016'>yotiyoti</h1>
       {!isFirstRef && !isAvailable && <ErrorText />}
       {isAvailable && (
         <div>
-          <button onClick={getCurrentPosition}>Get Current Position</button>
+          <button className='button-004' onClick={getCurrentPosition}>Get Current Position</button>
           <div>
             latitude: {position.latitude}
             <br />
@@ -112,6 +113,7 @@ export default () => {
           <h3>{CheckAnswer()}</h3>
         </div>
       )}
+      <label className='selectbox-001'>
       <select ref={aichi_jct} onChange={e => setJct(data.JCT[e.target.value])}>
         {data.JCT.map((JCT,index) => {
           // console.log(JCT)
@@ -122,11 +124,9 @@ export default () => {
             {JCT.name}
           </option>
         })}
-      {/* <option value="1">1</option>
- <option value="2">2</option>
- <option value="3">3</option> */}
       </select>
-      <div style={{ height: '300px', width: '300px' }}>
+      </label>
+      <div style={{ height: '265px', width: '80%', margin: '2% 10%',display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_NEXT_PUBLIC_GOOGLE_MAP_KEY }}
         // defaultCenter={{
@@ -142,6 +142,7 @@ export default () => {
         onChange={getCurrentPosition}
         // yesIWantToUseGoogleMapApiInternals={true}
       />
+    </div>
     </div>
     </div>
   );

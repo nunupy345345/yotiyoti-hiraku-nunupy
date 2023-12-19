@@ -129,3 +129,20 @@ body:after {
   left: 0;
   opacity: 0.5;
 }
+
+.list-011 {
+  list-style-type: disc;
+  padding: 1em 1em 1em 2.5em;
+  margin: 0% 30%;
+  border-left: 5px solid #2589d0;
+  background-color: #f2f2f2;
+}
+
+.list-011 li {
+  padding: .3em .3em .3em 0;
+}
+
+.list-011 li::marker {
+  color: #2589d0;
+  font-size: 1.1em;
+}

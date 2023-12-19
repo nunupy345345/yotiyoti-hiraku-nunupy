@@ -3,9 +3,6 @@ import './App.css';
 import GoogleMapReact from 'google-map-react';
 import data from "./jct.json"
 
-// const fs = require('fs');
-// const json = fs.readFileSync("./jct.json","utf-8");
-// const data = JSON.parse("")
 console.log(data.JCT)
 
 /* エラーテキスト */
@@ -19,13 +16,20 @@ export default () => {
   const [isAvailable, setAvailable] = useState(false);
   const [position, setPosition] = useState({ latitude: null, longitude: null });
   const [jct, setJct] = useState(data.JCT[0]);
-  const [marker, setMarker] = useState(null);
+  const [correctCount, setCorrectCount] = useState(() => {
+    // 正解数を JCT.name の数で表示する
+    const storedList = localStorage.getItem('correctJctList');
+    return storedList ? JSON.parse(storedList).length : 0;
+  });
+  const [correctJctList, setCorrectJctList] = useState(() => {
+    const storedList = localStorage.getItem('correctJctList');
+    return storedList ? JSON.parse(storedList) : [];
+  });
 
   // useEffectが実行されているかどうかを判定するために用意しています
   const isFirstRef = useRef(true);
   const aichi_jct = useRef(0)
-  // console.log(data.JCT[aichi_jct.current.value])
-  // console.log(jct)
+
 
   const defaultLatLng = {
     lat: jct.lat,
@@ -68,8 +72,22 @@ export default () => {
     if (position.latitude === null || position.longitude === null){
       answer = ""
     }
-    if (Correct(position.latitude,position.longitude)){
-      answer = "正解"
+    if (Correct(position.latitude, position.longitude)) {
+      answer = "正解";
+
+      // 正解したJCT.nameを保存
+      const newJctName = jct.name;
+      if (!correctJctList.includes(newJctName)) {
+        setCorrectJctList(prevList => {
+          const newList = [...prevList, newJctName];
+          localStorage.setItem('correctJctList', JSON.stringify(newList));
+
+          // 正解数を JCT.name の数で更新
+          setCorrectCount(newList.length);
+
+          return newList;
+        });
+      }
     }
     return answer;
   };
@@ -105,12 +123,12 @@ export default () => {
       {isAvailable && (
         <div>
           <button className='button-004' onClick={getCurrentPosition}>Get Current Position</button>
-          <div>
-            latitude: {position.latitude}
-            <br />
-            longitude: {position.longitude}
-          </div>
-          <h3>{CheckAnswer()}</h3>
+            <div>
+              latitude: {position.latitude}
+              <br />
+              longitude: {position.longitude}
+            </div>
+          <h3 className='heading-016'>{CheckAnswer()}</h3>
         </div>
       )}
       <label className='selectbox-001'>
@@ -129,10 +147,7 @@ export default () => {
       <div style={{ height: '265px', width: '80%', margin: '2% 10%',display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_NEXT_PUBLIC_GOOGLE_MAP_KEY }}
-        // defaultCenter={{
-        //   lat: jct.lat,
-        //   lng: jct.lng,
-        // }}
+
         center={{
           lat: jct.lat,
           lng: jct.lng,
@@ -143,6 +158,15 @@ export default () => {
         // yesIWantToUseGoogleMapApiInternals={true}
       />
     </div>
+    <p>進捗: {correctCount} / 16</p>
+          <div>
+            <h4>正解したJCT</h4>
+            <ul className='list-011'>
+              {correctJctList.map((jctName, index) => (
+                <li key={index}>{jctName}</li>
+              ))}
+            </ul>
+          </div>
     </div>
     </div>
   );
